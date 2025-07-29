@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: krushna
+  template:
+    metadata:
+      name: mypod
+      labels:
+        name: krushna
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus
+          ports:
+          - containerPort: 9090
+        - name: grafana
+          image: grafana/grafana
+          ports:
+          - containerPort: 3000
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  svc-prometheus
+spec:
+  type: NodePort
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    name: krushna
+  ports:
+    - port: 9090
+      targetPort: 9090
+      nodePort: 31000
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-grafana
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    name: krushna
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 31300

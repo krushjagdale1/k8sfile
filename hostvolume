@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolume2
+spec:
+  containers:
+  - name: hostname-krushna
+    image: ubuntu
+    command: ["/bin/bash","-c","sleep 15000"]
+    volumeMounts:
+    - mountPath: /tmp/hostpath  # Container mein yeh directory mount hogi
+      name: krushna
+  volumes:
+  - name: krushna
+    hostPath:
+      path: /tmp/data  # Host machine par yeh directory hogi
+      type: DirectoryOrCreate  # Agar directory nahi hai, toh create karega
+
