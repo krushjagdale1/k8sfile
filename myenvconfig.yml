@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myenvfile
+spec:
+  containers:
+  - name: c1
+    image: ubuntu
+    command: ["/bin/bash","-c","while true; do echo krushna sleep 5; done"]
+    env:
+    - name: MYENV
+      valueFrom:
+        configMapKeyRef:
+          name: mymap         # ithe aapn je config map la naam dile ahe te dyave
+          key: sample.conf    #ithe aapn ji config file banavli ahe ti dyavi
